@@ -1,38 +1,41 @@
 {
-  "schemaVersion": 1,
-  "id": "deepslatetweaks",
-  "version": "${1.2}",
-
-  "name": "Deepslate Tweaks",
-  "description": "This mod changes the mining speed of Deepslate to that of Stone!",
-  "authors": [
-    "SYCO3"
-  ],
-  "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/deepslate-tweaks",
-    "sources": "N/A ATM"
-  },
-
-  "license": "All Rights Reserved!",
-  "icon": "assets/deepslatetweaks/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "com.syco.deepslatetweaks.DeepslateTweaks"
-    ]
-  },
-  "mixins": [
-    "deepslatetweaks.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.15.6",
-    "fabric": "*",
-    "minecraft": "~1.20.4",
-    "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
-  }
+	"schemaVersion": 1,
+	"id": "deepslatetweaks",
+	"version": "${1.2}",
+	"name": "Deepslate Tweaks",
+	"description": "This mod changes the mining speed of Deepslate to that of Stone!",
+	"authors": [
+		"SYCO3"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/deepslate-tweaks",
+		"sources": "https://www.curseforge.com/minecraft/mc-mods/deepslate-tweaks"
+	},
+	"license": "All Rights Reserved!",
+	"icon": "assets/deepslatetweaks/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.syco.deepslatetweaks.DeepslateTweaks"
+		],
+		"client": [
+			"com.syco.deepslatetweaksclient.DeepslateTweaksClient"
+		]
+	},
+	"mixins": [
+		"deepslatetweaks.mixins.json",
+		{
+			"config": "deepslatetweaks.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
 }

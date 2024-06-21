@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.syco.deepslatetweaksclient.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"DeepslatetweaksClientMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
