@@ -1,246 +1,203 @@
 package com.syco.deepslatetweaks.mixin;
 
-import net.minecraft.block.*;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.math.intprovider.ConstantIntProvider;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.*;
+
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin (Blocks.class)
 public class BlocksMixin {
 
     //Redirect the Deepslate registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args= {
-                                    "stringValue=deepslate"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=deepslate"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;DEEPSLATE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/PillarBlock;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-
-    private static PillarBlock DeepslateRedirect(AbstractBlock.Settings settings) {
-        // stone strength is 1.5f
-        return new PillarBlock(settings.strength(1.5f, 6.0f));
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyDeepslateStrength(Args args) {
+        // cobblestone strength is 1.5f
+        args.set(0, 1.5F);
+        args.set(1, 6.0F);
     }
 
     //Redirect the Cobbled Deepslate registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args= {
-                                    "stringValue=cobbled_deepslate"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=cobbled_deepslate"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;COBBLED_DEEPSLATE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/Block;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-
-    private static Block CobbledDeepslateRedirect(AbstractBlock.Settings settings) {
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyCobbledDeepslateStrength(Args args) {
         // cobblestone strength is 2.0f
-        return new Block(settings.strength(2.0f, 6.0f));
+        args.set(0, 2.0F);
+        args.set(1, 6.0F);
     }
 
     // Redirect the Deepslate Gold Ore registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args = {
-                                    "stringValue=deepslate_gold_ore"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=deepslate_gold_ore"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;DEEPSLATE_GOLD_ORE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/ExperienceDroppingBlock;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-    
-    private static ExperienceDroppingBlock DeepslateGoldOreRedirect(IntProvider experience, AbstractBlock.Settings settings) {
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyDeepslateGoldOreStrength(Args args) {
         // ore strength is 3.0f
-        return new ExperienceDroppingBlock(experience, settings.strength(3.0f, 3.0f));
+        args.set(0, 3.0F);
+        args.set(1, 3.0F);
     }
 
     // Redirect the Deepslate Iron Ore registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args = {
-                                    "stringValue=deepslate_iron_ore"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=deepslate_iron_ore"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;DEEPSLATE_IRON_ORE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/ExperienceDroppingBlock;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-
-    private static ExperienceDroppingBlock DeepslateIronOreRedirect(IntProvider experience, AbstractBlock.Settings settings) {
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyDeepslateIronOreStrength(Args args) {
         // ore strength is 3.0f
-        return new ExperienceDroppingBlock(ConstantIntProvider.create(0), settings.strength(3.0f, 3.0f));
+        args.set(0, 3.0F);
+        args.set(1, 3.0F);
     }
 
     // Redirect the Deepslate Coal Ore registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args = {
-                                    "stringValue=deepslate_coal_ore"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=deepslate_coal_ore"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;DEEPSLATE_COAL_ORE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/ExperienceDroppingBlock;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-
-    private static ExperienceDroppingBlock DeepslateCoalOreRedirect(IntProvider experience, AbstractBlock.Settings settings) {
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyDeepslateCoalOreStrength(Args args) {
         // ore strength is 3.0f
-        return new ExperienceDroppingBlock(UniformIntProvider.create(0, 2), settings.strength(3.0f, 3.0f));
+        args.set(0, 3.0F);
+        args.set(1, 3.0F);
     }
 
     // Redirect the Deepslate Lapis Ore registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args = {
-                                    "stringValue=deepslate_lapis_ore"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=deepslate_lapis_ore"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;DEEPSLATE_LAPIS_ORE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/ExperienceDroppingBlock;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-
-    private static ExperienceDroppingBlock DeepslateLapisOreRedirect(IntProvider experience, AbstractBlock.Settings settings) {
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyDeepslateLapisOreStrength(Args args) {
         // ore strength is 3.0f
-        return new ExperienceDroppingBlock(UniformIntProvider.create(2, 5), settings.strength(3.0f, 3.0f));
+        args.set(0, 3.0F);
+        args.set(1, 3.0F);
     }
 
     // Redirect the Deepslate Diamond Ore registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args = {
-                                    "stringValue=deepslate_diamond_ore"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=deepslate_diamond_ore"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;DEEPSLATE_DIAMOND_ORE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/ExperienceDroppingBlock;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-
-    private static ExperienceDroppingBlock DeepslateDiamondOreRedirect(IntProvider experience, AbstractBlock.Settings settings) {
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyDeepslateDiamondOreStrength(Args args) {
         // ore strength is 3.0f
-        return new ExperienceDroppingBlock(UniformIntProvider.create(3, 7), settings.strength(3.0f, 3.0f));
+        args.set(0, 3.0F);
+        args.set(1, 3.0F);
     }
 
     // Redirect the Deepslate Redstone Ore registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args = {
-                                    "stringValue=deepslate_redstone_ore"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=deepslate_redstone_ore"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;DEEPSLATE_REDSTONE_ORE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/RedstoneOreBlock;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-
-    private static RedstoneOreBlock DeepslateRedstoneOreRedirect(AbstractBlock.Settings settings) {
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyDeepslateRedstoneOreStrength(Args args) {
         // ore strength is 3.0f
-        return new RedstoneOreBlock(settings.strength(3.0f, 3.0f));
+        args.set(0, 3.0F);
+        args.set(1, 3.0F);
     }
 
+
     // Redirect the Deepslate Emerald Ore registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args = {
-                                    "stringValue=deepslate_emerald_ore"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=deepslate_emerald_ore"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;DEEPSLATE_EMERALD_ORE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/ExperienceDroppingBlock;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-
-    private static ExperienceDroppingBlock DeepslateEmeraldOreRedirect(IntProvider experience, AbstractBlock.Settings settings) {
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyDeepslateEmeraldOreStrength(Args args) {
         // ore strength is 3.0f
-        return new ExperienceDroppingBlock(UniformIntProvider.create(3, 7), settings.strength(3.0f, 3.0f));
+        args.set(0, 3.0F);
+        args.set(1, 3.0F);
     }
 
     // Redirect the Deepslate Copper Ore registry
-    @Redirect(
+    @ModifyArgs(
+            method = "<clinit>",
             slice = @Slice(
-                    from = @At(
-                            value = "CONSTANT",
-                            args = {
-                                    "stringValue=deepslate_copper_ore"
-                            },
-                            ordinal = 0
-                    )
+                    from = @At(value = "CONSTANT", args = "stringValue=deepslate_copper_ore"),
+                    to = @At(value = "FIELD", target = "Lnet/minecraft/block/Blocks;DEEPSLATE_COPPER_ORE:Lnet/minecraft/block/Block;")
             ),
             at = @At(
-                    value = "NEW",
-                    target = "Lnet/minecraft/block/ExperienceDroppingBlock;*",
-                    ordinal = 0
-            ),
-            method = "<clinit>")
-
-    private static ExperienceDroppingBlock DeepslateCopperOreRedirect(IntProvider experience, AbstractBlock.Settings settings) {
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/AbstractBlock$Settings;strength(FF)" +
+                            "Lnet/minecraft/block/AbstractBlock$Settings;"
+            )
+    )
+    private static void modifyDeepslateCopperOreStrength(Args args) {
         // ore strength is 3.0f
-        return new ExperienceDroppingBlock(ConstantIntProvider.create(0), settings.strength(3.0f, 3.0f));
+        args.set(0, 3.0F);
+        args.set(1, 3.0F);
     }
 
 }
