@@ -5,7 +5,7 @@ This mod lowers the strength value of Deepslate and Cobbled Deepslate to that of
 ![Demo](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGducWYzaDN3bjhyMzZtd2U3MWhiNjZsb3Vrb2tubnYxMGJ5ZnV0bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eCp73D7FMXpjzPaPCF/giphy.gif)
 
 
-This is the repo for the Forge version of Deepslate Tweaks. This version of the code is only valid for the Forge platform.
+This is the repo for the Fabric version of Deepslate Tweaks. This version of the code is only valid for the Forge platform.
 
 **Download By Clicking Below!**
 
