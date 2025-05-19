@@ -7,7 +7,7 @@ This mod lowers the strength value of Deepslate and Cobbled Deepslate to that of
 
 This is the repo for the Fabric version of Deepslate Tweaks. This version of the code is only valid for the Forge platform.
 
-**Download By Clicking Below!**
+**Available on CurseForge or Modrinth! Download By Clicking Below!**
 
 [![CurseForge Downloads](https://cf.way2muchnoise.eu/full_632466_downloads.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/deepslate-tweaks)
 [![Downloads](https://img.shields.io/modrinth/dt/Jc0FvX5i?logo=modrinth&style=for-the-badge&logoColor=4c1&labelColor=2D2D2D)](https://modrinth.com/project/Jc0FvX5i)
