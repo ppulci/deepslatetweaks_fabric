@@ -37,7 +37,7 @@ Because only block properties are modified, the mod is:
 
 ## Compatibility
 
-- **Minecraft:** 26.1.2 (on Fabric Loader 0.19.3; see earlier releases for 1.21.x versions)
+- **Minecraft:** 26.2 (on Fabric Loader 0.19.3; see earlier releases for 1.21.x and 26.1.2)
 - **Mod loader:** Fabric (this repo is Fabric-only; Forge and NeoForge live in separate repos) — requires [Fabric API](https://modrinth.com/mod/fabric-api)
 
 ## Building from source

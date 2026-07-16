@@ -25,8 +25,9 @@ All vanilla blocks are constructed in the static initializer of `net.minecraft.w
 
 `BlocksMixin` uses `@ModifyArgs` targeting `strength(FF)` inside `<clinit>`, with a **`@Slice` per block** to pick out the right call among the hundreds in that initializer:
 
-- `from` anchors on the block's registry-name string constant (e.g. `"deepslate"`), which begins that block's registration. **This works on MC 26.1.x but NOT on 26.2+** — 26.2 removed those strings from `Blocks.<clinit>`; when porting to 26.2+, copy the Forge/NeoForge repos' `BlocksMixin` (anchors on `BlockItemIds` `GETSTATIC` with pinned opcodes; same package, drop-in).
-- `to` anchors on the `PUTSTATIC`-written `Blocks` field (e.g. `Blocks.DEEPSLATE`), which ends that block's registration.
+- `from` anchors on the `GETSTATIC` of the block's `net.minecraft.references.BlockItemIds` constant (e.g. `BlockItemIds.DEEPSLATE`), which begins that block's registration. (Before MC 26.2 this anchored on the registry-name string constant, e.g. `"deepslate"` — 26.2 removed those strings from `Blocks.<clinit>`; the current `BlocksMixin` is identical to the Forge/NeoForge repos'.)
+- `to` anchors on the `PUTSTATIC` of the block's field (e.g. `Blocks.DEEPSLATE`), which ends that block's registration.
+- Opcodes are pinned on both anchors because `Blocks` fields are also *read* later in `<clinit>` (e.g. `Properties.ofLegacyCopy(DEEPSLATE)`).
 - The single `strength(FF)` call between those two anchors is the one modified.
 
 This approach was chosen over alternatives because:
@@ -70,6 +71,6 @@ History lesson (from this mod's past): a release once shipped with mixins that w
 
 - Published on CurseForge (project 632466) and Modrinth (project `Jc0FvX5i`); links/badges in `README.md`.
 - **Versioning convention (applies across the NeoForge/Forge/Fabric repos):** `mod_version` tracks CONTENT only and must be identical across every loader and game version shipping that content. Never bump it for a port — game version and loader are carried by the filename (`archivesName` includes `minecraft_version`) and platform metadata. Bump MINOR for new user-facing capability, PATCH for bugfixes, MAJOR for gameplay redesign; a content bump means coordinated releases in all loader repos.
-- Current version: 2.2.0 (self-check startup diagnostics — content parity with the Forge/NeoForge repos' 2.2.0). Shipped here for MC 26.1.2 on Fabric Loader 0.19.3.
+- Current version: 2.2.0 (self-check startup diagnostics — content parity with the Forge/NeoForge repos' 2.2.0). Shipped here for MC 26.2 on Fabric Loader 0.19.3 (previously MC 26.1.2 — same content, different port).
 - Build with `gradlew build`; jar lands in `build/libs/`. Java 25 required (Gradle provisions it via the foojay toolchain resolver).
 - License is All Rights Reserved.
